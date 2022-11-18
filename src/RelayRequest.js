@@ -29,7 +29,7 @@ export default class RelayRequest {
     this.cacheConfig = cacheConfig;
     this.uploadables = uploadables;
 
-    this.id = this.operation.id || this.operation.name || this._generateID();
+    this.id = this.operation.name;
 
     const fetchOpts: FetchOpts = {
       method: 'POST',
@@ -57,7 +57,8 @@ export default class RelayRequest {
       }
 
       const formData = new _FormData_();
-      formData.append('id', this.getID());
+      formData.append('operationName', this.getID());
+    
       formData.append('query', this.getQueryString());
       formData.append('variables', JSON.stringify(this.getVariables()));
 
@@ -71,7 +72,7 @@ export default class RelayRequest {
     }
 
     return JSON.stringify({
-      id: this.getID(),
+      operationName: this.getID(),
       query: this.getQueryString(),
       variables: this.getVariables(),
     });
